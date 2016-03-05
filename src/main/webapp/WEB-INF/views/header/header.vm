@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap 实例 - 标签式的导航菜单</title>
+    <link href="#springUrl('/css/bootstrap.min.css')" rel="stylesheet">
+    <script src="#springUrl('/js/jquery.min.js')"></script>
+    <script src="#springUrl('/js/bootstrap.min.js')"></script>
+</head>
+<body>
+    <div class="container" width="80%">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#">Home</a></li>
+    </ul>
