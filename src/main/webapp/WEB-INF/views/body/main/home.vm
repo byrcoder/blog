@@ -1,0 +1,25 @@
+#parse("/header/header.vm")
+
+<div class="table-responsive">
+    <table class="table">
+        <caption>文章列表</caption>
+        <thead>
+        <tr>
+            <th>标题</th>
+            <th>日期</th>
+            <th>作者</th>
+        </tr>
+        </thead>
+        <tbody>
+            #foreach ($e in $articles)
+                <tr>
+                    <td><a href='#springUrl("/article/${e.id}")'>$e.title</a></td>
+                    <td>$e.publishTime</td>
+                    <td>$e.author</td>
+                </tr>
+            #end
+        </tbody>
+    </table>
+</div>
+
+#parse("/footer/footer.vm")

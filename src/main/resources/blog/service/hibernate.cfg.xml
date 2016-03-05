@@ -15,5 +15,6 @@
         <mapping resource="blog/service/entity.hbm.xml"/>
         -->
         <mapping class="blog.entity.Article"/>
+        <mapping class="blog.entity.Comment"/>
     </session-factory>
 </hibernate-configuration>

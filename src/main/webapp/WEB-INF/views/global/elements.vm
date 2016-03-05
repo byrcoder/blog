@@ -1,0 +1,6 @@
+#macro (table $trs)
+    #foreach ($e in $trs)
+        $e
+    #end
+#end
+

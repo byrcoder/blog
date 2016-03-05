@@ -5,35 +5,53 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:component-scan base-package="hello"/>
+    <context:component-scan base-package="blog"/>
     <mvc:annotation-driven/>
 
 
     <!-- 模板信息设置 -->
-    <bean id="velocityConfigurer"
-          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="resourceLoaderPath"  value="/WEB-INF/views" /><!-- 設置模板防止位置-->
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF/view/"/>
         <property name="velocityProperties">
             <props>
-                <prop key="directive.foreach.counter.name">loopCounter</prop>
-                <prop key="directive.foreach.counter.initial.value">0</prop>
-                <prop key="input.encoding">UTF-8</prop><!-- 指定模板引擎进行模板处理的编码 -->
-                <prop key="output.encoding">UTF-8</prop><!-- 指定输出流的编码 -->
+                <prop  key="input.encoding">UTF-8</prop>
+                <prop  key="output.encoding">UTF-8</prop>
             </props>
         </property>
     </bean>
 
-    <!-- 设置视图解析工具 -->
-    <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-        <property name="suffix" value=".vm" />
-        <!-- 避免乱码 -->
-        <property name="contentType" value="text/html;charset=UTF-8" />
-        <property name="dateToolAttribute" value="dateTool" />
-        <property name="numberToolAttribute" value="numberTool" />
-        <property name="exposeRequestAttributes" value="true" />
-        <property name="exposeSessionAttributes" value="true" />
+    <!--
+    View resolvers can also be configured with ResourceBundles or XML files. If you need
+    different view resolving based on Locale, you have to use the resource bundle resolver.
+    -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".vm"/>
+        <property name="contentType"><value>text/html;charset=UTF-8</value></property>
     </bean>
 
+    <bean id="artCache" class="blog.cache.impl.LocalCache">
+        <property name="name" value="article"/>
+    </bean>
+
+    <bean id="listCache" class="blog.cache.impl.LocalCache">
+        <property name="name" value="list"/>
+    </bean>
+
+    <bean id="commentCache" class="blog.cache.impl.LocalCache">
+        <property name="name" value="comment"/>
+    </bean>
+
+
+    <bean id="manager" class="blog.cache.manager.CacheManager">
+        <property name="caches">
+            <list>
+                <ref bean="artCache"/>
+                <ref bean="listCache"/>
+                <ref bean="commentCache"/>
+            </list>
+        </property>
+    </bean>
 
 </beans>
